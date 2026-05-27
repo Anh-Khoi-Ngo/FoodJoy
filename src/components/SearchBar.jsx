@@ -1,0 +1,33 @@
+
+export default function SearchBar({ onSearch }) {
+  return (
+    <form
+      onSubmit={e => {
+        e.preventDefault()
+        const q = e.currentTarget.query.value.trim()
+        if (onSearch) onSearch(q)
+      }}
+      className="w-full max-w-3xl mx-auto flex items-center gap-2"
+    >
+      <input
+        name="query"
+        type="search"
+        placeholder="Search recipes, ingredients, or cuisines..."
+        className="flex-1 px-4 py-3 rounded-lg border focus:outline-none"
+        style={{
+          borderColor: 'var(--neutral-300)',
+          background: 'var(--neutral-100)',
+          boxShadow: 'var(--shadow-soft)',
+        }}
+        aria-label="Search recipes"
+      />
+      <button
+        type="submit"
+        className="px-4 py-2 rounded-lg text-white text-sm"
+        style={{ backgroundColor: 'var(--primary-red)' }}
+      >
+        Search
+      </button>
+    </form>
+  )
+}

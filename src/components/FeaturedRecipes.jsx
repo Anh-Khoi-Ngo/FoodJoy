@@ -13,11 +13,11 @@ export default function FeaturedRecipes() {
         {featured.map(recipe => (
           <article
             key={recipe.id}
-            className="rounded-xl overflow-hidden shadow-md"
-            style={{ boxShadow: 'var(--shadow-medium)', borderRadius: 'var(--radius)' }}
+            className="rounded-xl overflow-hidden card-hover bg-white"
+            style={{ border: '1px solid var(--neutral-300)' }}
           >
             <div className="h-40 w-full overflow-hidden">
-              <img src={recipe.image} alt={recipe.title} className="w-full h-full object-cover" />
+              <img src={recipe.image} alt={recipe.title} className="img-rounded" />
             </div>
 
             <div className="p-4 bg-white">
@@ -29,7 +29,6 @@ export default function FeaturedRecipes() {
                 <span className="text-sm font-semibold" style={{ color: 'var(--primary-red)' }}>
                   View
                 </span>
-                <span className="text-sm text-neutral-600">⭐ {recipe.rating}</span>
               </div>
             </div>
           </article>

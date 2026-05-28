@@ -1,43 +1,113 @@
+import { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { Show, SignInButton, SignUpButton, UserButton } from '@clerk/react'
 
-export default function Nav() {
-  return (
-    <header className="w-full shadow-soft" style={{ boxShadow: 'var(--shadow-soft)' }}>
-      <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-6">
-          <a href="/" className="text-lg font-semibold" style={{ color: 'var(--primary-red)' }}>
-            FoodJoy
-          </a>
+const navLinks = [
+  { to: '/', label: 'Home' },
+  { to: '/recipes', label: 'Recipes' },
+  { to: '/meal-planner', label: 'Meal Planner' },
+  { to: '/favorites', label: 'Favorites' },
+  { to: '/blog', label: 'Blog' },
+]
 
-          <ul className="hidden md:flex items-center gap-4 text-sm text-neutral-600">
-            <li><a href="/" className="hover:text-neutral-900">Home</a></li>
-            <li><a href="/recipes" className="hover:text-neutral-900">Recipes</a></li>
-            <li><a href="/meal-planner" className="hover:text-neutral-900">Meal Planner</a></li>
-            <li><a href="/favorites" className="hover:text-neutral-900">Favorites</a></li>
+export default function Nav() {
+  const [menuOpen, setMenuOpen] = useState(false)
+  const location = useLocation()
+
+  function isActive(to) {
+    if (to === '/') return location.pathname === '/'
+    return location.pathname.startsWith(to)
+  }
+
+  return (
+    <header style={{ background: 'var(--neutral-100)', borderBottom: '1px solid var(--neutral-300)' }}>
+      <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div className="flex items-center gap-8">
+          <Link to="/" className="flex items-center shrink-0">
+            <img src="/foodjoy-full-logo.png" alt="FoodJoy" className="h-12 md:h-14" />
+          </Link>
+
+          {/* Desktop nav */}
+          <ul className="hidden md:flex items-center gap-1">
+            {navLinks.map(link => (
+              <li key={link.to}>
+                <Link
+                  to={link.to}
+                  className="px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-150"
+                  style={isActive(link.to)
+                    ? { color: 'var(--primary-red)', background: 'rgba(230,57,70,0.08)' }
+                    : { color: 'var(--neutral-600)' }
+                  }
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <Show when="signed-out">
-            <div className="flex gap-2">
-              <SignInButton>
-                <button className="px-3 py-1 rounded-md text-sm border" style={{ borderColor: 'var(--neutral-300)' }}>
-                  Sign in
-                </button>
-              </SignInButton>
-              <SignUpButton>
-                <button className="px-3 py-1 rounded-md text-sm bg-[var(--primary-red)] text-white" style={{ backgroundColor: 'var(--primary-red)' }}>
-                  Sign up
-                </button>
-              </SignUpButton>
-            </div>
+            <SignInButton>
+              <button
+                className="px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-150"
+                style={{ color: 'var(--neutral-600)', border: '1px solid var(--neutral-300)' }}
+              >
+                Sign in
+              </button>
+            </SignInButton>
+            <SignUpButton>
+              <button
+                className="px-4 py-2 rounded-lg text-sm font-medium text-white transition-all duration-150"
+                style={{ background: 'var(--primary-red)' }}
+              >
+                Sign up
+              </button>
+            </SignUpButton>
           </Show>
 
           <Show when="signed-in">
-            <UserButton />
+            <div className="flex items-center gap-2">
+              <span className="hidden sm:block text-sm" style={{ color: 'var(--neutral-600)' }}>My Account</span>
+              <UserButton />
+            </div>
           </Show>
+
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="md:hidden flex flex-col justify-center items-center w-8 h-8 gap-1.5"
+            aria-label="Toggle menu"
+          >
+            <span className="block w-5 h-0.5 rounded" style={{ background: 'var(--neutral-900)', transition: 'transform 200ms', transform: menuOpen ? 'translateY(3.5px) rotate(45deg)' : 'none' }} />
+            <span className="block w-5 h-0.5 rounded" style={{ background: 'var(--neutral-900)', opacity: menuOpen ? 0 : 1, transition: 'opacity 200ms' }} />
+            <span className="block w-5 h-0.5 rounded" style={{ background: 'var(--neutral-900)', transition: 'transform 200ms', transform: menuOpen ? 'translateY(-3.5px) rotate(-45deg)' : 'none' }} />
+          </button>
         </div>
       </nav>
+
+      {/* Mobile menu */}
+      {menuOpen && (
+        <div className="md:hidden px-4 pb-4" style={{ borderTop: '1px solid var(--neutral-300)' }}>
+          <ul className="flex flex-col gap-1">
+            {navLinks.map(link => (
+              <li key={link.to}>
+                <Link
+                  to={link.to}
+                  onClick={() => setMenuOpen(false)}
+                  className="block px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-150"
+                  style={isActive(link.to)
+                    ? { color: 'var(--primary-red)', background: 'rgba(230,57,70,0.08)' }
+                    : { color: 'var(--neutral-600)' }
+                  }
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </header>
   )
 }

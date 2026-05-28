@@ -12,7 +12,7 @@ export default function SearchBar({ onSearch }) {
       <input
         name="query"
         type="search"
-        placeholder="Search recipes, ingredients, or cuisines..."
+        placeholder="Search recipes..."
         className="flex-1 px-4 py-3 rounded-lg border focus:outline-none"
         style={{
           borderColor: 'var(--neutral-300)',

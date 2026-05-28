@@ -13,12 +13,7 @@ export default function Categories() {
         {categories.map(cat => (
           <button
             key={cat}
-            className="flex items-center justify-center py-4 rounded-lg bg-[var(--neutral-100)] border"
-            style={{
-              borderColor: 'var(--neutral-300)',
-              boxShadow: 'var(--shadow-soft)',
-              borderRadius: 'var(--radius)'
-            }}
+            className="category-pill flex items-center justify-center"
           >
             <span className="text-sm font-medium" style={{ color: 'var(--neutral-900)' }}>
               {cat}

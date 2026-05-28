@@ -26,3 +26,55 @@
   --shadow-medium: 0 6px 20px rgba(0,0,0,0.12);
   --radius: 12px;
 }
+
+/* Hero section */
+.hero {
+  background: linear-gradient(90deg, rgba(230,57,70,0.06) 0%, rgba(244,211,94,0.04) 100%);
+  padding: 3.5rem 0;
+}
+
+/* Hero card containing search */
+.hero-card {
+  background: var(--neutral-100);
+  border-radius: calc(var(--radius) + 4px);
+  box-shadow: var(--shadow-medium);
+  padding: 1.25rem;
+}
+
+/* Card hover lift */
+.card-hover {
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+}
+
+/* Rounded image helper */
+.img-rounded {
+  border-top-left-radius: calc(var(--radius) - 4px);
+  border-top-right-radius: calc(var(--radius) - 4px);
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Category pill */
+.category-pill {
+  border-radius: 9999px;
+  padding: 0.6rem 1rem;
+  background: var(--neutral-100);
+  border: 1px solid var(--neutral-300);
+  box-shadow: var(--shadow-soft);
+  transition: transform 140ms ease, background 140ms ease;
+}
+.category-pill:hover {
+  transform: translateY(-4px);
+  background: var(--neutral-200);
+  cursor: pointer;
+}
+
+button {
+  cursor: pointer;
+}

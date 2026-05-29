@@ -26,8 +26,10 @@ export default function SearchBar({ onSearch }) {
       />
       <button
         type="submit"
-        className="px-4 py-2 rounded-lg text-white text-sm cursor-pointer"
-        style={{ backgroundColor: 'var(--primary-red)' }}
+        className="px-4 py-2 rounded-lg text-white text-sm cursor-pointer transition-all duration-150"
+        style={{ background: 'var(--primary-red)' }}
+        onMouseEnter={e => e.currentTarget.style.background = 'var(--primary-red-dark)'}
+        onMouseLeave={e => e.currentTarget.style.background = 'var(--primary-red)'}
       >
         Search
       </button>

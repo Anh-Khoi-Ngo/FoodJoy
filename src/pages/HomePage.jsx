@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { searchMeals, listCategories, filterByCategory, listAllMeals } from '../api/theMealDb'
 import RecipeCard from '../components/RecipeCard'
 import Pagination from '../components/Pagination'
@@ -8,13 +9,18 @@ import AdBanner from '../components/AdBanner'
 const PAGE_SIZE = 12
 
 export default function HomePage() {
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  // All filter state is derived from URL params
+  const query = searchParams.get('q') || ''
+  const selectedCat = searchParams.get('cat') || ''
+  const page = parseInt(searchParams.get('page') || '1', 10)
+
   const [meals, setMeals] = useState([])
   const [categories, setCategories] = useState([])
-  const [query, setQuery] = useState('')
-  const [selectedCat, setSelectedCat] = useState('')
-  const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(true)
-  const [hasSearched, setHasSearched] = useState(false)
+
+  const hasActiveFilter = !!(query || selectedCat)
 
   // Load categories once
   useEffect(() => { listCategories().then(setCategories).catch(() => {}) }, [])
@@ -30,11 +36,9 @@ export default function HomePage() {
         } else if (query) {
           data = await searchMeals(query)
         } else {
-          // "All" – fetch all recipes by combining all categories
           data = await listAllMeals()
         }
         setMeals(data)
-        setPage(1)
       } catch {
         setMeals([])
       }
@@ -46,16 +50,24 @@ export default function HomePage() {
   const totalPages = Math.ceil(meals.length / PAGE_SIZE)
   const paged = meals.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
 
+  function updateUrl(newQ, newCat, newPage) {
+    const params = new URLSearchParams()
+    if (newQ) params.set('q', newQ)
+    if (newCat) params.set('cat', newCat)
+    if (newPage > 1) params.set('page', String(newPage))
+    setSearchParams(params, { replace: true })
+  }
+
   function handleFilter(cat) {
-    setSelectedCat(cat)
-    setQuery('')
-    if (cat) setHasSearched(true); else setHasSearched(false)
+    updateUrl('', cat, 1)
   }
 
   function handleHeroSearch(q) {
-    setQuery(q)
-    setSelectedCat('')
-    if (q) setHasSearched(true); else setHasSearched(false)
+    updateUrl(q, '', 1)
+  }
+
+  function handlePageChange(newPage) {
+    updateUrl(query, selectedCat, newPage)
   }
 
   return (
@@ -75,7 +87,7 @@ export default function HomePage() {
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Search hint when user searched */}
-        {hasSearched && (
+        {hasActiveFilter && (
           <p className="mb-4 text-sm" style={{ color: 'var(--neutral-600)' }}>
             {query
               ? `Showing results for "${query}"`
@@ -113,7 +125,7 @@ export default function HomePage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {paged.map(m => <RecipeCard key={m.idMeal} meal={m} />)}
             </div>
-            <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
+            <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />
           </>
         )}
 

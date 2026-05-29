@@ -27,9 +27,16 @@
   --radius: 12px;
 }
 
-/* Hero section */
+/* Sticky nav */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+/* Hero section - green gradient */
 .hero {
-  background: linear-gradient(90deg, rgba(230,57,70,0.06) 0%, rgba(244,211,94,0.04) 100%);
+  background: linear-gradient(135deg, rgba(76,175,80,0.08) 0%, rgba(244,211,94,0.06) 50%, rgba(230,57,70,0.03) 100%);
   padding: 3.5rem 0;
 }
 
@@ -75,6 +82,50 @@
   cursor: pointer;
 }
 
+/* Green pill for active categories */
+.category-pill.active {
+  background: var(--secondary-green) !important;
+  color: #fff !important;
+  border-color: var(--secondary-green) !important;
+}
+
+/* Green accent buttons */
+.btn-primary {
+  background: var(--secondary-green);
+  color: #fff;
+  border: none;
+}
+.btn-primary:hover {
+  background: var(--secondary-green-dark);
+}
+
+.btn-outline {
+  color: var(--neutral-600);
+  border: 1px solid var(--neutral-300);
+  background: transparent;
+}
+.btn-outline:hover {
+  background: var(--neutral-200);
+}
+
 button {
   cursor: pointer;
+}
+
+/* Green badge for recipe tags */
+.tag-green {
+  background: var(--secondary-green-light) !important;
+  color: var(--neutral-900) !important;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--neutral-200);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--secondary-green-light);
+  border-radius: 3px;
 }

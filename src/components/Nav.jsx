@@ -4,7 +4,6 @@ import { Show, SignInButton, SignUpButton, UserButton } from '@clerk/react'
 
 const navLinks = [
   { to: '/', label: 'Home' },
-  { to: '/recipes', label: 'Recipes' },
   { to: '/meal-planner', label: 'Meal Planner' },
   { to: '/favorites', label: 'Favorites' },
   { to: '/blog', label: 'Blog' },
@@ -20,7 +19,7 @@ export default function Nav() {
   }
 
   return (
-    <header style={{ background: 'var(--neutral-100)', borderBottom: '1px solid var(--neutral-300)' }}>
+    <header className="sticky-nav" style={{ background: 'var(--neutral-100)', borderBottom: '1px solid var(--neutral-300)' }}>
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-8">
           <Link to="/" className="flex items-center shrink-0">
@@ -35,7 +34,7 @@ export default function Nav() {
                   to={link.to}
                   className="px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-150"
                   style={isActive(link.to)
-                    ? { color: 'var(--primary-red)', background: 'rgba(230,57,70,0.08)' }
+                    ? { color: 'var(--secondary-green)', background: 'rgba(76,175,80,0.08)' }
                     : { color: 'var(--neutral-600)' }
                   }
                 >
@@ -50,8 +49,7 @@ export default function Nav() {
           <Show when="signed-out">
             <SignInButton>
               <button
-                className="px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-150"
-                style={{ color: 'var(--neutral-600)', border: '1px solid var(--neutral-300)' }}
+                className="px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-150 btn-outline"
               >
                 Sign in
               </button>
@@ -60,6 +58,8 @@ export default function Nav() {
               <button
                 className="px-4 py-2 rounded-lg text-sm font-medium text-white transition-all duration-150"
                 style={{ background: 'var(--primary-red)' }}
+                onMouseEnter={e => e.currentTarget.style.background = 'var(--primary-red-dark)'}
+                onMouseLeave={e => e.currentTarget.style.background = 'var(--primary-red)'}
               >
                 Sign up
               </button>
@@ -79,9 +79,12 @@ export default function Nav() {
             className="md:hidden flex flex-col justify-center items-center w-8 h-8 gap-1.5"
             aria-label="Toggle menu"
           >
-            <span className="block w-5 h-0.5 rounded" style={{ background: 'var(--neutral-900)', transition: 'transform 200ms', transform: menuOpen ? 'translateY(3.5px) rotate(45deg)' : 'none' }} />
-            <span className="block w-5 h-0.5 rounded" style={{ background: 'var(--neutral-900)', opacity: menuOpen ? 0 : 1, transition: 'opacity 200ms' }} />
-            <span className="block w-5 h-0.5 rounded" style={{ background: 'var(--neutral-900)', transition: 'transform 200ms', transform: menuOpen ? 'translateY(-3.5px) rotate(-45deg)' : 'none' }} />
+            <span className="block w-5 h-0.5 rounded" style={{ background: 'var(--neutral-900)', transition: 'transform 200ms', 
+              transform: menuOpen ? 'translateY(3.5px) rotate(45deg)' : 'none' }} />
+            <span className="block w-5 h-0.5 rounded" style={{ background: 'var(--neutral-900)', opacity: menuOpen ? 0 : 1, 
+              transition: 'opacity 200ms' }} />
+            <span className="block w-5 h-0.5 rounded" style={{ background: 'var(--neutral-900)', transition: 'transform 200ms', 
+              transform: menuOpen ? 'translateY(-3.5px) rotate(-45deg)' : 'none' }} />
           </button>
         </div>
       </nav>
@@ -97,7 +100,7 @@ export default function Nav() {
                   onClick={() => setMenuOpen(false)}
                   className="block px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-150"
                   style={isActive(link.to)
-                    ? { color: 'var(--primary-red)', background: 'rgba(230,57,70,0.08)' }
+                    ? { color: 'var(--secondary-green)', background: 'rgba(76,175,80,0.08)' }
                     : { color: 'var(--neutral-600)' }
                   }
                 >

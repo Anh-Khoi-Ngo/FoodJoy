@@ -3,8 +3,6 @@ import { searchMeals, listCategories, filterByCategory, listAllMeals } from '../
 import RecipeCard from '../components/RecipeCard'
 import Pagination from '../components/Pagination'
 import SearchBar from '../components/SearchBar'
-import FeaturedRecipes from '../components/FeaturedRecipes'
-import Categories from '../components/Categories'
 import AdBanner from '../components/AdBanner'
 
 const PAGE_SIZE = 12
@@ -76,16 +74,6 @@ export default function HomePage() {
       </section>
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <AdBanner position="top" />
-
-        {/* Featured Recipes + Categories – shown only on default "All" view */}
-        {!query && !selectedCat && (
-          <>
-            <FeaturedRecipes />
-            <Categories />
-          </>
-        )}
-
         {/* Search hint when user searched */}
         {hasSearched && (
           <p className="mb-4 text-sm" style={{ color: 'var(--neutral-600)' }}>
@@ -123,7 +111,7 @@ export default function HomePage() {
         ) : (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {paged.map(m => <RecipeCard key={m.idMeal} meal={m} showCategory />)}
+              {paged.map(m => <RecipeCard key={m.idMeal} meal={m} />)}
             </div>
             <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
           </>

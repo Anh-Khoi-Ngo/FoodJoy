@@ -21,7 +21,9 @@ export async function listCategories() {
 export async function filterByCategory(category) {
   const res = await fetch(`${BASE}/filter.php?c=${encodeURIComponent(category)}`)
   const data = await res.json()
-  return data.meals || []
+  const meals = data.meals || []
+  // filter.php returns meals without strCategory; attach it
+  return meals.map(m => ({ ...m, strCategory: category }))
 }
 
 export async function filterByArea(area) {
@@ -32,7 +34,6 @@ export async function filterByArea(area) {
 
 /**
  * Fetches ALL recipes by loading every category and deduplicating.
- * This is the proper way to get "all meals" from TheMealDB.
  */
 export async function listAllMeals() {
   const cats = await listCategories()

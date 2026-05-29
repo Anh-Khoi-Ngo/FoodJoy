@@ -1,4 +1,3 @@
-
 export default function SearchBar({ onSearch }) {
   return (
     <form
@@ -20,10 +19,14 @@ export default function SearchBar({ onSearch }) {
           boxShadow: 'var(--shadow-soft)',
         }}
         aria-label="Search recipes"
+        onChange={e => {
+          const q = e.currentTarget.value.trim()
+          if (onSearch) onSearch(q)
+        }}
       />
       <button
         type="submit"
-        className="px-4 py-2 rounded-lg text-white text-sm"
+        className="px-4 py-2 rounded-lg text-white text-sm cursor-pointer"
         style={{ backgroundColor: 'var(--primary-red)' }}
       >
         Search

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-export default function RecipeCard({ meal, showCategory = false }) {
+export default function RecipeCard({ meal }) {
   if (!meal) return null
   return (
     <Link
@@ -15,10 +15,12 @@ export default function RecipeCard({ meal, showCategory = false }) {
         <h3 className="text-base font-semibold" style={{ color: 'var(--neutral-900)' }}>
           {meal.strMeal}
         </h3>
-        <div className="mt-1 flex items-center justify-between text-sm" style={{ color: 'var(--neutral-600)' }}>
-          {showCategory && <span>{meal.strCategory}</span>}
-          {meal.strArea && <span>{meal.strArea}</span>}
-        </div>
+        {meal.strCategory && (
+          <div className="mt-1 flex items-center justify-between text-sm" style={{ color: 'var(--neutral-600)' }}>
+            <span>{meal.strCategory}</span>
+            {meal.strArea && <span>{meal.strArea}</span>}
+          </div>
+        )}
       </div>
     </Link>
   )

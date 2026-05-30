@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import { useAuth, SignInButton } from '@clerk/react'
 import { lookupMeal, searchMeals, extractIngredients } from '../api/theMealDb'
 import RecipeCard from '../components/RecipeCard'
 import AdBanner from '../components/AdBanner'
@@ -12,6 +13,7 @@ function getYoutubeId(url) {
 
 export default function RecipeDetailPage() {
   const { id } = useParams()
+  const { isSignedIn } = useAuth()
   const [meal, setMeal] = useState(null)
   const [related, setRelated] = useState([])
   const [loading, setLoading] = useState(true)
@@ -21,6 +23,7 @@ export default function RecipeDetailPage() {
       return favs.includes(id)
     } catch { return false }
   })
+  const [showSignInPrompt, setShowSignInPrompt] = useState(false)
 
   useEffect(() => {
     let cancelled = false
@@ -44,6 +47,11 @@ export default function RecipeDetailPage() {
   }, [id])
 
   function toggleFavorite() {
+    if (!isSignedIn) {
+      setShowSignInPrompt(true)
+      setTimeout(() => setShowSignInPrompt(false), 4000)
+      return
+    }
     const favs = JSON.parse(localStorage.getItem('favorites') || '[]')
     if (favorited) {
       const updated = favs.filter(f => f !== id)
@@ -56,12 +64,8 @@ export default function RecipeDetailPage() {
     }
   }
 
-  if (loading) 
-    return 
-    <main className="max-w-6xl mx-auto px-4 py-12 text-center" style={{ color: 'var(--neutral-600)' }}>Loading…</main>
-  if (!meal) 
-    return 
-    <main className="max-w-6xl mx-auto px-4 py-12 text-center" style={{ color: 'var(--neutral-600)' }}>Recipe not found.</main>
+  if (loading) return <main className="max-w-6xl mx-auto px-4 py-12 text-center" style={{ color: 'var(--neutral-600)' }}>Loading…</main>
+  if (!meal) return <main className="max-w-6xl mx-auto px-4 py-12 text-center" style={{ color: 'var(--neutral-600)' }}>Recipe not found.</main>
 
   const ingredients = extractIngredients(meal)
   const steps = (meal.strInstructions || '').split(/\r?\n/).filter(s => s.trim())
@@ -69,6 +73,17 @@ export default function RecipeDetailPage() {
 
   return (
     <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Sign-in prompt toast */}
+      {showSignInPrompt && (
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 p-4 rounded-xl shadow-lg flex items-center gap-3 text-sm" style={{ background: 'var(--neutral-100)', border: '1px solid var(--neutral-300)', maxWidth: 400 }}>
+          <span style={{ color: 'var(--neutral-900)' }}>Sign in to like recipes</span>
+          <SignInButton mode="modal">
+            <button className="px-3 py-1.5 rounded-lg text-white text-xs font-medium" style={{ background: 'var(--primary-red)' }}>Sign In</button>
+          </SignInButton>
+          <button onClick={() => setShowSignInPrompt(false)} className="text-xs" style={{ color: 'var(--neutral-600)' }}>✕</button>
+        </div>
+      )}
+
       <AdBanner position="top" />
 
       {/* Breadcrumb */}
@@ -89,13 +104,13 @@ export default function RecipeDetailPage() {
             <span className="px-3 py-1 rounded-full" style={{ background: 'var(--neutral-200)', color: 'var(--neutral-600)' }}>{meal.strArea}</span>
             <button
               onClick={toggleFavorite}
-              className="ml-auto px-3 py-1 rounded-full text-sm font-medium"
+              className="ml-auto px-3 py-1 rounded-full text-sm font-medium transition-all duration-150"
               style={{
                 background: favorited ? 'var(--accent-heart)' : 'var(--neutral-200)',
                 color: favorited ? '#fff' : 'var(--neutral-600)',
               }}
             >
-              {favorited ? '♥ Saved' : '♡ Save'}
+              {favorited ? '♥ Liked' : '♡ Like'}
             </button>
           </div>
         </div>

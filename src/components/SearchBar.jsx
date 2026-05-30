@@ -23,6 +23,10 @@ export default function SearchBar({ onSearch }) {
           const q = e.currentTarget.value.trim()
           if (onSearch) onSearch(q)
         }}
+        onInput={e => {
+          const q = e.currentTarget.value.trim()
+          if (onSearch) onSearch(q)
+        }}
       />
       <button
         type="submit"

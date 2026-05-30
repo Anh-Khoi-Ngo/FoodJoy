@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import { SignInButton } from '@clerk/react'
 import { useAuth } from '@clerk/react'
 import { searchMeals } from '../api/theMealDb'
+import SearchBar from '../components/SearchBar'
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 const MEALS = ['Breakfast', 'Lunch', 'Dinner']
@@ -23,8 +24,17 @@ export default function MealPlannerPage() {
   })
   const [searchDay, setSearchDay] = useState('')
   const [searchMeal, setSearchMeal] = useState('')
-  const [query, setQuery] = useState('')
   const [results, setResults] = useState([])
+  const timerRef = useRef(null)
+
+  const handleSearch = useCallback((q) => {
+    clearTimeout(timerRef.current)
+    if (!q) { setResults([]); return }
+    timerRef.current = setTimeout(async () => {
+      const data = await searchMeals(q)
+      setResults(data.slice(0, 6))
+    }, 300)
+  }, [])
 
   if (!isSignedIn) {
     return (
@@ -43,19 +53,12 @@ export default function MealPlannerPage() {
     localStorage.setItem('mealPlan', JSON.stringify(newPlan))
   }
 
-  async function handleSearch(e) {
-    e.preventDefault()
-    const data = await searchMeals(query)
-    setResults(data.slice(0, 6))
-  }
-
   function assignMeal(meal) {
     if (!searchDay || !searchMeal) return
     const newPlan = { ...plan }
     newPlan[searchDay] = { ...newPlan[searchDay], [searchMeal]: meal }
     savePlan(newPlan)
     setResults([])
-    setQuery('')
     setSearchDay('')
     setSearchMeal('')
   }
@@ -98,10 +101,9 @@ export default function MealPlannerPage() {
             <option value="">Select Meal</option>
             {MEALS.map(m => <option key={m} value={m}>{m}</option>)}
           </select>
-          <form onSubmit={handleSearch} className="flex gap-2 flex-1">
-            <input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search recipe…" className="flex-1 px-3 py-2 rounded-lg border text-sm focus:outline-none" style={{ borderColor: 'var(--neutral-300)' }} />
-            <button type="submit" className="px-3 py-2 rounded-lg text-sm text-white" style={{ background: 'var(--primary-red)' }}>Search</button>
-          </form>
+          <div className="flex-1">
+            <SearchBar onSearch={handleSearch} />
+          </div>
         </div>
         {results.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">

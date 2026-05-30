@@ -80,9 +80,13 @@ export default function HomePage() {
         )}
 
         <div className="flex flex-wrap gap-2 mb-6">
-          <button onClick={() => handleFilter('')} className={`category-pill text-xs ${!selectedCat && !query ? 'active' : ''}`}>All</button>
+          <button onClick={() => handleFilter('')} className={`category-pill text-xs ${!selectedCat && !query ? 'active' : ''}`}>
+            All
+          </button>
           {categories.map(c => (
-            <button key={c.idCategory} onClick={() => handleFilter(c.strCategory)} className={`category-pill text-xs ${selectedCat === c.strCategory ? 'active' : ''}`}>{c.strCategory}</button>
+            <button key={c.idCategory} onClick={() => handleFilter(c.strCategory)} 
+            className={`category-pill text-xs ${selectedCat === c.strCategory ? 'active' : ''}`}>{c.strCategory}
+            </button>
           ))}
         </div>
 

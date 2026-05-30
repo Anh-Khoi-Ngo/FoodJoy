@@ -112,6 +112,11 @@ button {
   cursor: pointer;
 }
 
+/* Search clear button (x) cursor pointer */
+input[type="search"]::-webkit-search-cancel-button {
+  cursor: pointer;
+}
+
 /* Vertical writing for side ads */
 .writing-mode-vertical {
   writing-mode: vertical-rl;

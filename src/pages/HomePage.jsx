@@ -4,14 +4,12 @@ import { searchMeals, listCategories, filterByCategory, listAllMeals } from '../
 import RecipeCard from '../components/RecipeCard'
 import Pagination from '../components/Pagination'
 import SearchBar from '../components/SearchBar'
-import AdBanner from '../components/AdBanner'
 
 const PAGE_SIZE = 12
 
 export default function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams()
 
-  // All filter state is derived from URL params
   const query = searchParams.get('q') || ''
   const selectedCat = searchParams.get('cat') || ''
   const page = parseInt(searchParams.get('page') || '1', 10)
@@ -22,10 +20,8 @@ export default function HomePage() {
 
   const hasActiveFilter = !!(query || selectedCat)
 
-  // Load categories once
   useEffect(() => { listCategories().then(setCategories).catch(() => {}) }, [])
 
-  // Load meals: All by default, filtered by search or category
   useEffect(() => {
     async function load() {
       setLoading(true)
@@ -58,21 +54,12 @@ export default function HomePage() {
     setSearchParams(params, { replace: true })
   }
 
-  function handleFilter(cat) {
-    updateUrl('', cat, 1)
-  }
-
-  function handleHeroSearch(q) {
-    updateUrl(q, '', 1)
-  }
-
-  function handlePageChange(newPage) {
-    updateUrl(query, selectedCat, newPage)
-  }
+  function handleFilter(cat) { updateUrl('', cat, 1) }
+  function handleHeroSearch(q) { updateUrl(q, '', 1) }
+  function handlePageChange(newPage) { updateUrl(query, selectedCat, newPage) }
 
   return (
     <>
-      {/* Hero */}
       <section className="hero">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
           <img src="/foodjoy-full-logo.png" alt="FoodJoy" className="h-16 md:h-20 mb-4" />
@@ -86,33 +73,16 @@ export default function HomePage() {
       </section>
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Search hint when user searched */}
         {hasActiveFilter && (
           <p className="mb-4 text-sm" style={{ color: 'var(--neutral-600)' }}>
-            {query
-              ? `Showing results for "${query}"`
-              : selectedCat
-                ? `Showing recipes in "${selectedCat}"`
-                : ''}
+            {query ? `Showing results for "${query}"` : `Showing recipes in "${selectedCat}"`}
           </p>
         )}
 
-        {/* Category chips */}
         <div className="flex flex-wrap gap-2 mb-6">
-          <button
-            onClick={() => handleFilter('')}
-            className={`category-pill text-xs ${!selectedCat && !query ? 'active' : ''}`}
-          >
-            All
-          </button>
+          <button onClick={() => handleFilter('')} className={`category-pill text-xs ${!selectedCat && !query ? 'active' : ''}`}>All</button>
           {categories.map(c => (
-            <button
-              key={c.idCategory}
-              onClick={() => handleFilter(c.strCategory)}
-              className={`category-pill text-xs ${selectedCat === c.strCategory ? 'active' : ''}`}
-            >
-              {c.strCategory}
-            </button>
+            <button key={c.idCategory} onClick={() => handleFilter(c.strCategory)} className={`category-pill text-xs ${selectedCat === c.strCategory ? 'active' : ''}`}>{c.strCategory}</button>
           ))}
         </div>
 
@@ -128,8 +98,6 @@ export default function HomePage() {
             <Pagination currentPage={page} totalPages={totalPages} onPageChange={handlePageChange} />
           </>
         )}
-
-        <AdBanner position="bottom" />
       </main>
     </>
   )

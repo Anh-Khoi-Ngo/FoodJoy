@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { SignInButton } from '@clerk/react'
 import { useAuth } from '@clerk/react'
 import { searchMeals } from '../api/theMealDb'
-import AdBanner from '../components/AdBanner'
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 const MEALS = ['Breakfast', 'Lunch', 'Dinner']
@@ -88,9 +87,6 @@ export default function MealPlannerPage() {
     <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <h1 className="text-3xl font-bold mb-6" style={{ color: 'var(--neutral-900)' }}>Meal Planner</h1>
 
-      <AdBanner position="top" />
-
-      {/* Add meal form */}
       <div className="p-4 rounded-xl mb-6" style={{ background: 'var(--neutral-200)' }}>
         <h2 className="text-sm font-semibold mb-3" style={{ color: 'var(--neutral-900)' }}>Add a Meal</h2>
         <div className="flex flex-col sm:flex-row gap-3 mb-3">
@@ -119,7 +115,6 @@ export default function MealPlannerPage() {
         )}
       </div>
 
-      {/* Weekly calendar */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-3">
         {DAYS.map(day => (
           <div key={day} className="rounded-xl p-3" style={{ background: 'var(--neutral-100)', border: '1px solid var(--neutral-300)' }}>
@@ -152,8 +147,6 @@ export default function MealPlannerPage() {
           </div>
         ))}
       </div>
-
-      <AdBanner position="bottom" />
     </main>
   )
 }

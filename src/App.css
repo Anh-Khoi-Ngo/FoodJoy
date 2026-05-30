@@ -112,6 +112,12 @@ button {
   cursor: pointer;
 }
 
+/* Vertical writing for side ads */
+.writing-mode-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
 /* Green badge for recipe tags */
 .tag-green {
   background: var(--secondary-green-light) !important;

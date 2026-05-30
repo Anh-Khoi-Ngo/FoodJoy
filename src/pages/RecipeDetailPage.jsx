@@ -3,7 +3,6 @@ import { useParams, Link } from 'react-router-dom'
 import { useAuth, SignInButton } from '@clerk/react'
 import { lookupMeal, searchMeals, extractIngredients } from '../api/theMealDb'
 import RecipeCard from '../components/RecipeCard'
-import AdBanner from '../components/AdBanner'
 
 function getYoutubeId(url) {
   if (!url) return ''
@@ -73,7 +72,6 @@ export default function RecipeDetailPage() {
 
   return (
     <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Sign-in prompt toast */}
       {showSignInPrompt && (
         <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 p-4 rounded-xl shadow-lg flex items-center gap-3 text-sm" style={{ background: 'var(--neutral-100)', border: '1px solid var(--neutral-300)', maxWidth: 400 }}>
           <span style={{ color: 'var(--neutral-900)' }}>Sign in to like recipes</span>
@@ -84,9 +82,6 @@ export default function RecipeDetailPage() {
         </div>
       )}
 
-      <AdBanner position="top" />
-
-      {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm mb-6" style={{ color: 'var(--neutral-600)' }}>
         <Link to="/" className="hover:underline">Home</Link>
         <span>/</span>
@@ -94,7 +89,6 @@ export default function RecipeDetailPage() {
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8">
-        {/* Left - image + meta */}
         <div className="lg:w-1/2">
           <div className="rounded-xl overflow-hidden" style={{ boxShadow: 'var(--shadow-medium)' }}>
             <img src={meal.strMealThumb} alt={meal.strMeal} className="w-full h-72 sm:h-96 object-cover" />
@@ -105,23 +99,16 @@ export default function RecipeDetailPage() {
             <button
               onClick={toggleFavorite}
               className="ml-auto px-3 py-1 rounded-full text-sm font-medium transition-all duration-150"
-              style={{
-                background: favorited ? 'var(--accent-heart)' : 'var(--neutral-200)',
-                color: favorited ? '#fff' : 'var(--neutral-600)',
-              }}
+              style={{ background: favorited ? 'var(--accent-heart)' : 'var(--neutral-200)', color: favorited ? '#fff' : 'var(--neutral-600)' }}
             >
               {favorited ? '♥ Liked' : '♡ Like'}
             </button>
           </div>
         </div>
 
-        {/* Right - ingredients */}
         <div className="lg:w-1/2">
           <h1 className="text-3xl font-bold mb-4" style={{ color: 'var(--neutral-900)' }}>{meal.strMeal}</h1>
-
-          <h2 className="text-xl font-semibold mb-3 flex items-center gap-2" style={{ color: 'var(--secondary-green)' }}>
-            <span>🧂</span> Ingredients
-          </h2>
+          <h2 className="text-xl font-semibold mb-3 flex items-center gap-2" style={{ color: 'var(--secondary-green)' }}><span>🧂</span> Ingredients</h2>
           <ul className="space-y-2 mb-6">
             {ingredients.map(({ ingredient, measure }) => (
               <li key={ingredient} className="flex justify-between text-sm py-1.5 px-2 rounded-lg" style={{ background: 'var(--neutral-200)', color: 'var(--neutral-900)' }}>
@@ -133,48 +120,27 @@ export default function RecipeDetailPage() {
         </div>
       </div>
 
-      <AdBanner position="mid" />
-
-      {/* Instructions */}
       <section className="mt-8 p-6 rounded-xl" style={{ background: 'var(--neutral-200)' }}>
-        <h2 className="text-xl font-semibold mb-4 flex items-center gap-2" style={{ color: 'var(--secondary-green)' }}>
-          <span>📋</span> Instructions
-        </h2>
+        <h2 className="text-xl font-semibold mb-4 flex items-center gap-2" style={{ color: 'var(--secondary-green)' }}><span>📋</span> Instructions</h2>
         <ol className="space-y-4">
           {steps.map((step, i) => (
             <li key={i} className="flex gap-3 text-sm leading-relaxed" style={{ color: 'var(--neutral-900)' }}>
-              <span
-                className="shrink-0 w-7 h-7 flex items-center justify-center rounded-full text-white text-xs font-bold"
-                style={{ background: 'var(--secondary-green)' }}
-              >
-                {i + 1}
-              </span>
+              <span className="shrink-0 w-7 h-7 flex items-center justify-center rounded-full text-white text-xs font-bold" style={{ background: 'var(--secondary-green)' }}>{i + 1}</span>
               <p className="pt-0.5">{step}</p>
             </li>
           ))}
         </ol>
       </section>
 
-      {/* Video */}
       {youtubeId && (
         <section className="mt-8">
-          <h2 className="text-xl font-semibold mb-3 flex items-center gap-2" style={{ color: 'var(--secondary-green)' }}>
-            <span>🎥</span> Video
-          </h2>
+          <h2 className="text-xl font-semibold mb-3 flex items-center gap-2" style={{ color: 'var(--secondary-green)' }}><span>🎥</span> Video</h2>
           <div className="aspect-video rounded-xl overflow-hidden" style={{ boxShadow: 'var(--shadow-medium)' }}>
-            <iframe
-              className="w-full h-full"
-              src={`https://www.youtube.com/embed/${youtubeId}`}
-              title="Recipe video"
-              allowFullScreen
-            />
+            <iframe className="w-full h-full" src={`https://www.youtube.com/embed/${youtubeId}`} title="Recipe video" allowFullScreen />
           </div>
         </section>
       )}
 
-      <AdBanner position="bottom" />
-
-      {/* Related */}
       {related.length > 0 && (
         <section className="mt-10">
           <h2 className="text-2xl font-semibold mb-4" style={{ color: 'var(--neutral-900)' }}>Related Recipes</h2>

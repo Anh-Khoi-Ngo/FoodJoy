@@ -88,7 +88,21 @@ export default function MealPlannerPage() {
 
   return (
     <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-3xl font-bold mb-6" style={{ color: 'var(--neutral-900)' }}>Meal Planner</h1>
+      <h1 className="text-3xl font-bold mb-2" style={{ color: 'var(--neutral-900)' }}>Meal Planner</h1>
+      <p className="mb-6 text-sm" style={{ color: 'var(--neutral-600)' }}>Plan your weekly meals in a few simple steps.</p>
+
+      {/* Instructions */}
+      <div className="p-4 rounded-xl mb-6" style={{ background: 'var(--neutral-100)', border: '1px solid var(--neutral-300)' }}>
+        <h2 className="text-sm font-semibold mb-2" style={{ color: 'var(--primary-red)' }}>How to plan</h2>
+        <ol className="text-sm list-decimal ml-5 space-y-1" style={{ color: 'var(--neutral-600)' }}>
+          <li>Pick a <strong>Day</strong> and a <strong>Meal</strong> slot (Breakfast, Lunch, or Dinner).</li>
+          <li>Type a recipe name in the search bar — results appear as you type.</li>
+          <li>Click a recipe from the results to assign it to that slot.</li>
+          <li>To rearrange, <strong>drag</strong> a recipe from one slot and <strong>drop</strong> it onto another.</li>
+          <li>Click <strong>Remove</strong> to clear a slot.</li>
+        </ol>
+        <p className="text-xs mt-2" style={{ color: 'var(--neutral-600)' }}>Your plan is saved automatically in your browser.</p>
+      </div>
 
       <div className="p-4 rounded-xl mb-6" style={{ background: 'var(--neutral-200)' }}>
         <h2 className="text-sm font-semibold mb-3" style={{ color: 'var(--neutral-900)' }}>Add a Meal</h2>
@@ -119,7 +133,8 @@ export default function MealPlannerPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-3">
         {DAYS.map(day => (
-          <div key={day} className="rounded-xl p-3" style={{ background: 'var(--neutral-100)', border: '1px solid var(--neutral-300)' }}>
+          <div key={day} className="rounded-xl p-3" style={{ background: 'var(--neutral-100)', 
+          border: '1px solid var(--neutral-300)' }}>
             <h3 className="text-sm font-semibold mb-2 text-center" style={{ color: 'var(--primary-red)' }}>{day}</h3>
             {MEALS.map(slot => {
               const item = plan[day]?.[slot]
@@ -127,7 +142,8 @@ export default function MealPlannerPage() {
                 <div
                   key={slot}
                   className="rounded-lg p-2 mb-2 text-center min-h-16 flex flex-col items-center justify-center"
-                  style={{ background: item ? 'var(--neutral-200)' : 'var(--neutral-100)', border: '1px dashed var(--neutral-300)' }}
+                  style={{ background: item ? 'var(--neutral-200)' : 'var(--neutral-100)', 
+                  border: '1px dashed var(--neutral-300)' }}
                   draggable={!!item}
                   onDragStart={e => item && handleDragStart(e, day, slot)}
                   onDragOver={e => e.preventDefault()}
@@ -138,7 +154,10 @@ export default function MealPlannerPage() {
                     <>
                       <img src={item.strMealThumb} alt="" className="w-10 h-10 rounded object-cover my-1" />
                       <span className="text-xs truncate w-full" style={{ color: 'var(--neutral-900)' }}>{item.strMeal}</span>
-                      <button onClick={() => removeMeal(day, slot)} className="text-xs mt-1 underline" style={{ color: 'var(--primary-red)' }}>Remove</button>
+                      <button onClick={() => removeMeal(day, slot)} className="text-xs mt-1 underline" 
+                      style={{ color: 'var(--primary-red)' }}>
+                        Remove
+                      </button>
                     </>
                   ) : (
                     <span className="text-xs" style={{ color: 'var(--neutral-600)' }}>Drop here</span>

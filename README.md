@@ -33,7 +33,7 @@ A simple and modern React app for browsing recipes, viewing categories, and expl
 - Clean UI with TailwindCSS
 
 - Free API integration (TheMealDB)
-<br><br>
+<br>
 
 **🧰 Tech Stack**
 - React + Vite
@@ -45,10 +45,12 @@ A simple and modern React app for browsing recipes, viewing categories, and expl
 - Clerk Authentication
 
 - TheMealDB API
-<br><br>
+<br>
 
 
 
 **🌐 API**
+
 FoodJoy uses TheMealDB:
+
 https://www.themealdb.com/api.php

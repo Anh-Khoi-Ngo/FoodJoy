@@ -19,13 +19,8 @@ export default function SearchBar({ onSearch }) {
           boxShadow: 'var(--shadow-soft)',
         }}
         aria-label="Search recipes"
-        onChange={e => {
-          const q = e.currentTarget.value.trim()
-          if (onSearch) onSearch(q)
-        }}
         onInput={e => {
-          const q = e.currentTarget.value.trim()
-          if (onSearch) onSearch(q)
+          if (!e.target.value) onSearch('')
         }}
       />
       <button

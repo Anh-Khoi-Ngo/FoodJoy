@@ -1,38 +1,60 @@
 🍽️ FoodJoy — Recipe & Meal Planner App
+
 A simple and modern React app for browsing recipes, viewing categories, and exploring meals using TheMealDB API. Includes Clerk authentication for saving favorites and accessing private features.
+
 1. Home Page
-<img width="1920" height="871" alt="Screenshot (193)" src="https://github.com/user-attachments/assets/d8f45af9-bc2e-4bad-9ca4-b8f040575024" />
+<img width="1464" height="865" alt="image" src="https://github.com/user-attachments/assets/78f58c23-0f87-4814-8773-2be327d22624" />
+
 
 2. Recipe Details Page
-<img width="1920" height="868" alt="Screenshot (195)" src="https://github.com/user-attachments/assets/d1f91b74-d9e0-43db-90e1-be6efda70d06" />
+<img width="1512" height="863" alt="image" src="https://github.com/user-attachments/assets/0d34b3da-cdcc-41f7-903d-bdffa97d1d78" />
+
 
 3. Meal Planner Page 
-<img width="1492" height="866" alt="image" src="https://github.com/user-attachments/assets/efbc7eaf-b3a4-4a41-8cbb-d60197423061" />
+<img width="1436" height="842" alt="image" src="https://github.com/user-attachments/assets/7a59f62d-c870-4aa1-8d6c-0154b2fc01ee" />
+
 
 4. Favorites Page
-<img width="1480" height="628" alt="image" src="https://github.com/user-attachments/assets/a8e26dfd-3369-4031-a956-8fed7b1dbee4" />
+<img width="1431" height="519" alt="image" src="https://github.com/user-attachments/assets/2c81d2a2-39bb-4052-82c9-79f0ab094ba5" />
+
 
 5. Blog Article page
-<img width="1445" height="870" alt="image" src="https://github.com/user-attachments/assets/e283fa0c-df73-4787-b75f-fb26a69c0e10" />
+<img width="1399" height="863" alt="image" src="https://github.com/user-attachments/assets/8bde0dac-abe6-4560-950c-9878a3f72092" />
+
 
 6. Blog Page
-<img width="1409" height="875" alt="image" src="https://github.com/user-attachments/assets/819e729a-a6e2-45dc-b7ec-174c152fd02d" />
+<img width="1414" height="860" alt="image" src="https://github.com/user-attachments/assets/3ed32f0b-2993-418f-83ce-0e1370d7064e" />
+
+
 
 🚀 Features
+
 Browse and search recipes
+
 View recipe details (ingredients, steps, images)
+
 Explore categories
+
 Save favorites (requires login)
+
 Clean UI with TailwindCSS
+
 Free API integration (TheMealDB)
+
 
 🧰 Tech Stack
 React + Vite
+
 React Router
+
 TailwindCSS
+
 Clerk Authentication
+
 TheMealDB API
+
 
 🌐 API
 FoodJoy uses TheMealDB:
+
 https://www.themealdb.com/api.php

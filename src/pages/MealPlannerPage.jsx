@@ -96,7 +96,7 @@ export default function MealPlannerPage() {
         <h2 className="text-sm font-semibold mb-2" style={{ color: 'var(--primary-red)' }}>How to plan</h2>
         <ol className="text-sm list-decimal ml-5 space-y-1" style={{ color: 'var(--neutral-600)' }}>
           <li>Pick a <strong>Day</strong> and a <strong>Meal</strong> slot (Breakfast, Lunch, or Dinner).</li>
-          <li>Type a recipe name in the search bar — results appear as you type.</li>
+          <li>Type a recipe name in the search bar and click search.</li>
           <li>Click a recipe from the results to assign it to that slot.</li>
           <li>To rearrange, <strong>drag</strong> a recipe from one slot and <strong>drop</strong> it onto another.</li>
           <li>Click <strong>Remove</strong> to clear a slot.</li>

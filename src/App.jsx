@@ -1,5 +1,6 @@
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
+import { Analytics } from '@vercel/analytics/react'
 import Layout from './components/Layout'
 import HomePage from './pages/HomePage'
 import RecipeDetailPage from './pages/RecipeDetailPage'
@@ -19,6 +20,7 @@ function App() {
         <Route path="/meal-planner" element={<MealPlannerPage />} />
         <Route path="/favorites" element={<FavoritesPage />} />
       </Routes>
+      <Analytics />
     </Layout>
   )
 }

@@ -9,7 +9,7 @@ A simple and modern React app for browsing recipes, viewing categories, and expl
 
 - Browse and search recipes
 
-- View recipe details (ingredients, steps, images)
+- View recipe details (ingredients, steps, images, videos)
 
 - Explore categories
 
